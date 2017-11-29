@@ -1,7 +1,9 @@
 
 
 $("#test").click(function(){
-    app.test();
+    //app.ajout(1);
+    app.supprimer(0);
+    //https://cordova.apache.org/docs/fr/latest/cordova/storage/localstorage/localstorage.html
 });
 
 
@@ -67,61 +69,25 @@ var app = {
 
     },
 
-    test: function(){
-    	var jsonArray = {"name": "Chris", "age": "38"};
-		var myJsonString = JSON.stringify(jsonArray);
-		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fs) {
+    ajout: function(donnees){
+        var data = localStorage.getItem('alarme');  
+        if (data) {  
+            data = JSON.parse(data);
+        }else(data = [])
+        data.push(donnees);
+        console.log(data);
+        localStorage.setItem('alarme', JSON.stringify(data, null, '\t'));
+    },
 
-	    	console.log('file system open: ' + fs.name);
-	    	fs.root.getFile("test.json", { create: true, exclusive: false }, function (fileEntry) {
-
-	        	console.log("fileEntry is file?" + fileEntry.isFile.toString());
-	        	fileEntry.name == 'test.json';
-	        	fileEntry.fullPath == 'C:/test.json'
-	        	app.writeFile(fileEntry, null);
-
-	    	});
-
-		});
-	},
-
-	writeFile: function(fileEntry, dataObj) {
-    // Create a FileWriter object for our FileEntry (log.txt).
-    fileEntry.createWriter(function (fileWriter) {
-
-        fileWriter.onwriteend = function() {
-            console.log("Successful file write...");
-            app.readFile(fileEntry);
-        };
-
-        fileWriter.onerror = function (e) {
-            console.log("Failed file write: " + e.toString());
-        };
-
-        // If data object is not passed in,
-        // create a new Blob instead.
-        if (!dataObj) {
-            dataObj = new Blob(['some file data'], { type: 'text/plain' });
-        }
-
-        fileWriter.write(dataObj);
-    });
-	},
-
-	readFile: function(fileEntry) {
-
-    fileEntry.file(function (file) {
-        var reader = new FileReader();
-
-        reader.onloadend = function() {
-            console.log("Successful file read: " + this.result);
-            //	displayFileData(fileEntry.fullPath + ": " + this.result);
-        };
-
-        reader.readAsText(file);
-
-    });
-	},
+    supprimer: function(index){
+        var data = localStorage.getItem('alarme');  
+        if (data) {  
+            data = JSON.parse(data);
+        }else(console.log(data))
+        data.splice(index, 1);
+        console.log(data);
+        localStorage.setItem('alarme', JSON.stringify(data, null, '\t'));
+    }
 
 };
 
