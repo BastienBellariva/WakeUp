@@ -1,9 +1,11 @@
+/* CSS HEADER */
 .absoluteHeader {
     position: fixed;
     top: 0%;
     width: 100%;
     height: 90px;
     border-bottom: solid 2px;
+    background-color: white;
 }
 
 .divButtonUpdate {
@@ -36,4 +38,29 @@
 .buttonAdd {
     color: orange;
     margin-left: 40px;
+}
+
+/* CSS BANDEAU ALARME */
+.containDivAlarm {
+    margin-top:90px;
+}
+
+.divAlarm {
+    width: 100%;
+    height: 70px;
+    border-bottom: solid 2px;
+    border-color: grey;
+    padding-left: 10px;
+    padding-right: 7px;
+}
+
+.divHeure {
+    font-size: 30px;
+    font-weight: bold;
+    padding-top: 13px;
+}
+
+.divActive {
+    text-align: right;
+    font-size: 50px;
 }
