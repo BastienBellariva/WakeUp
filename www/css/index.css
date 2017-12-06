@@ -70,10 +70,16 @@ button {
 .divHeure {
     font-size: 30px;
     font-weight: bold;
-    padding-top: 13px;
+    padding-top: 12px;
     color: white;
     background-color: black;
     border: 0;
+    width: 150px;
+    margin-right:25px;
+}
+
+input:focus {
+    outline: none;
 }
 
 .divActive {
