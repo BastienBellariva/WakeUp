@@ -1,12 +1,13 @@
 
-
-// $("#test").click(function(){
-//     //console.log(app.date()+app.heure())
-//     app.ajout('30/10/2017/16/7');
-//     //app.supprimer(0);
-//     //https://cordova.apache.org/docs/fr/latest/cordova/storage/localstorage/localstorage.html
-// });
-
+$("#buttonAdd").click(function(){
+    //console.log(app.date()+app.heure())
+    app.supprimer(0);
+    app.supprimer(0);
+    //app.ajout('16:00');
+    //https://cordova.apache.org/docs/fr/latest/cordova/storage/localstorage/localstorage.html
+    //console.log('click');
+    //console.log($('#time').val());
+});
 
 
 var app = {
@@ -77,7 +78,7 @@ var app = {
               heure = "0" + heure;  
          //return heure + "h" + minutes;
          heureString = new String();
-         heureString += date.getHours() + "/";
+         heureString += date.getHours() + ":";
          heureString += date.getMinutes();
          return heureString;
     },
@@ -88,7 +89,7 @@ var app = {
             console.log(data);
             data = JSON.parse(data);
             var date = new Date();
-            date = app.date(date) + app.heure(date);
+            date = app.heure(date);
             data.forEach(function(element){
                 if (element == date) {
                     app.notif();
@@ -102,7 +103,10 @@ var app = {
         if (data) {  
             data = JSON.parse(data);
         }else(data = [])
+        console.log(donnees);
+        donnees = $('#'+donnees).val();
         data.push(donnees);
+        console.log("data");
         console.log(data);
         localStorage.setItem('alarme', JSON.stringify(data, null, '\t'));
     },
@@ -134,3 +138,6 @@ var app = {
 };
 
 app.initialize();
+
+document.getElementById("champTime").onchange = function(){app.ajout("champTime")};
+
