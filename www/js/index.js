@@ -1,11 +1,11 @@
 
 
-$("#test").click(function(){
-    //console.log(app.date()+app.heure())
-    app.ajout('30/10/2017/16/7');
-    //app.supprimer(0);
-    //https://cordova.apache.org/docs/fr/latest/cordova/storage/localstorage/localstorage.html
-});
+// $("#test").click(function(){
+//     //console.log(app.date()+app.heure())
+//     app.ajout('30/10/2017/16/7');
+//     //app.supprimer(0);
+//     //https://cordova.apache.org/docs/fr/latest/cordova/storage/localstorage/localstorage.html
+// });
 
 
 
