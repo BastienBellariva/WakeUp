@@ -1,3 +1,7 @@
+body {
+    background-color: black;
+}
+
 /* CSS HEADER */
 .absoluteHeader {
     position: fixed;
@@ -5,7 +9,7 @@
     width: 100%;
     height: 90px;
     border-bottom: solid 2px;
-    background-color: white;
+    border-color: white;
 }
 
 .divButtonUpdate {
@@ -33,6 +37,7 @@
 .libelleApp {
     font-size: 30px;
     font-weight: bold;
+    color: white;
 }
 
 .buttonAdd {
@@ -58,9 +63,9 @@
     font-size: 30px;
     font-weight: bold;
     padding-top: 13px;
+    color: white;
 }
 
 .divActive {
     text-align: right;
-    font-size: 50px;
 }

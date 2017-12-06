@@ -1,8 +1,9 @@
 
 
 $("#test").click(function(){
-    app.ajout(258665);
-    app.supprimer(0);
+    //console.log(app.date()+app.heure())
+    app.ajout('30/10/2017/16/7');
+    //app.supprimer(0);
     //https://cordova.apache.org/docs/fr/latest/cordova/storage/localstorage/localstorage.html
 });
 
@@ -12,6 +13,7 @@ var app = {
     // Application Constructor
     initialize: function() {
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+        document.addEventListener('pause', this.onPause.bind(this), false);
     },
 
     // deviceready Event Handler
@@ -24,8 +26,13 @@ var app = {
         var date = this.date();
         var heure = this.heure();
         date = date + " - " + heure;
-        alert(date);
-        //setInterval(this.alarm, 1000);
+        //navigator.notification.alert(date, null, 'date', 'yo');
+        //alert(date);
+        setInterval(this.alarm, 1000);
+    },
+
+    onPause: function(){
+        setInterval(this.alarm, 1000);
     },
 
     // Update DOM on a Received Event
@@ -51,7 +58,13 @@ var app = {
         message += date.getDate() + " ";   // numero du jour
         message += mois[date.getMonth()] + " ";   // mois
         message += date.getFullYear();
-        return message;
+
+        var dateString = new String();
+        dateString += date.getDate() + "/";
+        dateString += date.getMonth() + "/";
+        //dateString += (parseInt(date.getMonth())+1).toString();
+        dateString += date.getFullYear()+ "/";
+        return dateString;
     },
 
     heure: function(date){      // recupere la date sous format heure minute
@@ -62,18 +75,23 @@ var app = {
               minutes = "0" + minutes;
          if (heure < 10)
               heure = "0" + heure;  
-         return heure + "h" + minutes;
+         //return heure + "h" + minutes;
+         heureString = new String();
+         heureString += date.getHours() + "/";
+         heureString += date.getMinutes();
+         return heureString;
     },
 
     alarm: function(){      // verifie si les alarmes rentrees sont égales à la date et heure actuelle
         var data = localStorage.getItem('alarme');  
         if (data) {  
+            console.log(data);
             data = JSON.parse(data);
-            var date = new date;
-            data.foreach(function(element){
+            var date = new Date();
+            date = app.date(date) + app.heure(date);
+            data.forEach(function(element){
                 if (element == date) {
-                    this.alert();
-                    break;
+                    app.notif();
                 }
             });
         }else(data = [])
@@ -107,10 +125,10 @@ var app = {
         data[index] = nouvelleValeur;
         console.log(data);
         localStorage.setItem('alarme', JSON.stringify(data, null, '\t'));
-
     },
 
-    alert: function(){   //notification
+    notif: function(){   //notification
+        navigator.notification.beep(6);
     },
 
 };
