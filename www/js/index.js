@@ -22,7 +22,7 @@ var app = {
     // 'pause', 'resume', etc.
 
     onDeviceReady: function() {
-        this.receivedEvent('deviceready');
+        //this.receivedEvent('deviceready');
         var date = this.date();
         var heure = this.heure();
         date = date + " - " + heure;
@@ -36,16 +36,16 @@ var app = {
     },
 
     // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
+    // receivedEvent: function(id) {
+    //     var parentElement = document.getElementById(id);
+    //     var listeningElement = parentElement.querySelector('.listening');
+    //     var receivedElement = parentElement.querySelector('.received');
 
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
+    //     listeningElement.setAttribute('style', 'display:none;');
+    //     receivedElement.setAttribute('style', 'display:block;');
 
-        console.log('Received Event: ' + id);
-    },
+    //     console.log('Received Event: ' + id);
+    // },
 
     date: function(date){       // recupere la date sous format jour jour mois annee
         // les noms de jours / mois
