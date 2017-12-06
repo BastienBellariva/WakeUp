@@ -2,6 +2,11 @@ body {
     background-color: black;
 }
 
+button {
+    border: 0;
+    background-color: none;
+}
+
 /* CSS HEADER */
 .absoluteHeader {
     position: fixed;
@@ -10,6 +15,7 @@ body {
     height: 90px;
     border-bottom: solid 2px;
     border-color: white;
+    background-color: black;
 }
 
 .divButtonUpdate {
@@ -32,6 +38,8 @@ body {
 
 .buttonUpdate {
     color: orange;
+    padding-left: 10px;
+    padding-top:3px;
 }
 
 .libelleApp {
@@ -64,6 +72,8 @@ body {
     font-weight: bold;
     padding-top: 13px;
     color: white;
+    background-color: black;
+    border: 0;
 }
 
 .divActive {
