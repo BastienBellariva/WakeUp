@@ -1,8 +1,8 @@
 
 $("#buttonAdd").click(function(){
     //console.log(app.date()+app.heure())
-    app.supprimer(0);
-    app.supprimer(0);
+    /*app.supprimer(0);
+    app.supprimer(0);*/
     //app.ajout('16:00');
     //https://cordova.apache.org/docs/fr/latest/cordova/storage/localstorage/localstorage.html
     //console.log('click');
@@ -83,7 +83,8 @@ var app = {
          return heureString;
     },
 
-    alarm: function(){      // verifie si les alarmes rentrees sont égales à la date et heure actuelle
+    // verifie si les alarmes rentrees sont égales à la date et heure actuelle
+    alarm: function(){      
         var data = localStorage.getItem('alarme');  
         if (data) {  
             console.log(data);
@@ -98,7 +99,8 @@ var app = {
         }else(data = [])
     },
 
-    ajout: function(donnees){   // ajoute une nouvelle alarme
+    // ajoute une nouvelle alarme
+    ajout: function(donnees){   
         var data = localStorage.getItem('alarme');  
         if (data) {  
             data = JSON.parse(data);
@@ -111,7 +113,8 @@ var app = {
         localStorage.setItem('alarme', JSON.stringify(data, null, '\t'));
     },
 
-    supprimer: function(index){ // supprime une alarme
+    // supprime une alarme
+    supprimer: function(index){
         var data = localStorage.getItem('alarme');  
         if (data) {  
             data = JSON.parse(data);
@@ -121,7 +124,8 @@ var app = {
         localStorage.setItem('alarme', JSON.stringify(data, null, '\t'));
     },
 
-    modifier: function(index, nouvelleValeur){  // modifier la valeur d'une alarme
+    // modifier la valeur d'une alarme
+    modifier: function(index, nouvelleValeur){
         var data = localStorage.getItem('alarme');  
         if (data) {  
             data = JSON.parse(data);

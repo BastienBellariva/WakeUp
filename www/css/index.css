@@ -51,6 +51,7 @@ button {
 .buttonAdd {
     color: orange;
     margin-left: 40px;
+    background-color: black;
 }
 
 /* CSS BANDEAU ALARME */
@@ -67,15 +68,14 @@ button {
     padding-right: 7px;
 }
 
-.divHeure {
+.divHour {
     font-size: 30px;
     font-weight: bold;
     padding-top: 12px;
     color: white;
     background-color: black;
     border: 0;
-    width: 150px;
-    margin-right:25px;
+    width: 50%;
 }
 
 input:focus {
@@ -83,5 +83,28 @@ input:focus {
 }
 
 .divActive {
-    text-align: right;
+    position: absolute;
+    right: 0;
+    width: 40%;
+    padding-right: 20%;
+    padding-left: 30%;
+    visibility: visible;
+}
+
+.divDelete {
+    /*Positionnement*/
+    position: absolute;
+    visibility: hidden;
+    right: -100px;
+    /*Dimension*/
+    width: 120px;
+    height: 70px;
+    /*Design*/
+    background-color: red;
+    color: white;
+    border: 0;
+    border-bottom: solid 2px;
+    border-color: grey;
+    font-size: 30px;
+    font-weight: bold; 
 }
