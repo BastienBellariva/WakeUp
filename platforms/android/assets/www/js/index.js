@@ -1,10 +1,3 @@
-
-$(".divLibelleApp").click(function(){
-    app.supprimer(0);
-    app.supprimer(0);
-});
-
-
 var app = {
     // Application Constructor
     initialize: function() {
@@ -18,11 +11,12 @@ var app = {
     // 'pause', 'resume', etc.
 
     onDeviceReady: function() {
+        cordova.plugins.notification.local.requestPermission();
+        cordova.plugins.backgroundMode.enable();
         setInterval(this.alarm, 1000);
     },
 
     onPause: function(){
-        setInterval(this.alarm, 1000);
     },
 
     date: function(date){       // recupere la date sous format jour jour mois annee
@@ -53,7 +47,6 @@ var app = {
               minutes = "0" + minutes;
          if (heure < 10)
               heure = "0" + heure;  
-         //return heure + "h" + minutes;
          heureString = new String();
          heureString += heure + ":";
          heureString += minutes;
@@ -66,38 +59,24 @@ var app = {
         if (data) {  
             var validate;
             var index = 0;
-            console.log(data);
             data = JSON.parse(data);
             var date = new Date();
             date = app.heure(date);
-            console.log(date);
+            var dataC = app.tableauC();
             data.forEach(function(element){
-                validate = document.getElementById("inputCheckbox" + index).checked;
-                if(validate) console.log(element);
+                validate = dataC[index];
                 if (element == date && validate) {
-                    app.notif();
+                    app.notif(index);
                 }
                 index ++;
             });
-        }else(data = [])
+        }
     },
 
     // ajoute une nouvelle alarme
     ajout: function(){   
-        var data = localStorage.getItem('alarme');  
-        var dataC = localStorage.getItem('alarmeC');
-        if (data) {  
-            data = JSON.parse(data);
-        }
-        else data = [];
-
-        if (dataC) {
-            dataC = JSON.parse(dataC);
-        }
-        else dataC = [];
-
-        console.log(dataC);
-        console.log(data);
+        var data = this.tableauAlarme();  
+        var dataC = this.tableauC();
         data.push("00:00");
         dataC.push(0);
         localStorage.setItem('alarme', JSON.stringify(data, null, '\t'));
@@ -106,26 +85,17 @@ var app = {
 
     // supprime une alarme
     supprimer: function(index){
-        var data = localStorage.getItem('alarme');  
-        var dataC = localStorage.getItem('alarmeC');
-        if (data) {  
-            data = JSON.parse(data);
-            dataC = JSON.parse(dataC);
-        }
+        var data = this.tableauAlarme();  
+        var dataC = this.tableauC();
         data.splice(index, 1);
         dataC.splice(index, 1);
-        console.log(data);
-        console.log(dataC);
         localStorage.setItem('alarme', JSON.stringify(data, null, '\t'));
         localStorage.setItem('alarmeC', JSON.stringify(dataC, null, '\t'));
     },
 
     // modifie la valeur d'une alarme
     modifier: function(index, donnees){
-        var data = localStorage.getItem('alarme');  
-        if (data) {  
-            data = JSON.parse(data);
-        }
+        var data = this.tableauAlarme();
         data[index] = $('#'+donnees).val();
         localStorage.setItem('alarme', JSON.stringify(data, null, '\t'));
     },
@@ -133,10 +103,7 @@ var app = {
     // modifie la valeur d'un input checkbox
     modifierC : function(index){
         var validate = document.getElementById("inputCheckbox" + index).checked;
-        var dataC = localStorage.getItem('alarmeC');
-        if (dataC) {  
-            dataC = JSON.parse(dataC);
-        }
+        var dataC = this.tableauC();
         if (validate) {
             dataC[index] = 1;
         }
@@ -145,8 +112,26 @@ var app = {
     },
 
     //notification
-    notif: function(){   
+    notif: function(index){   
+        //Param de la notification
+        cordova.plugins.notification.local.schedule({
+            title: 'WakeUp',
+            text: 'Debout',
+            foreground: true,
+            vibrate: true,
+            actions: [{ id: index.toString(), title: 'desactiver' }]
+        });
+
+        //desactive l'alarme quand on appui sur desactiver
+        cordova.plugins.notification.local.on(index.toString(), function () {
+            document.getElementById("inputCheckbox" + index).checked = false;
+            var dataC = app.tableauC();
+            dataC[index] = 0;
+            localStorage.setItem('alarmeC', JSON.stringify(dataC, null, '\t'));
+
+        });
         navigator.notification.beep(1);
+        cordova.plugins.backgroundMode.wakeUp();
     },
 
     //retourne la longueur du tableau de données
@@ -170,7 +155,7 @@ var app = {
         if (data) {  
             data = JSON.parse(data);
         }
-        else(data = [])
+        else data = [];
         return data;
     },
 
@@ -180,7 +165,7 @@ var app = {
         if (dataC) {  
             dataC = JSON.parse(dataC);
         }
-        else(dataC = [])
+        else dataC = [];
         return dataC;
     },
 

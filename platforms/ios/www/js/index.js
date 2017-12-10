@@ -1,12 +1,8 @@
 
-
-$("#test").click(function(){
-    //console.log(app.date()+app.heure())
-    app.ajout('30/10/2017/16/7');
-    //app.supprimer(0);
-    //https://cordova.apache.org/docs/fr/latest/cordova/storage/localstorage/localstorage.html
+$(".divLibelleApp").click(function(){
+    app.supprimer(0);
+    app.supprimer(0);
 });
-
 
 
 var app = {
@@ -22,29 +18,11 @@ var app = {
     // 'pause', 'resume', etc.
 
     onDeviceReady: function() {
-        this.receivedEvent('deviceready');
-        var date = this.date();
-        var heure = this.heure();
-        date = date + " - " + heure;
-        //navigator.notification.alert(date, null, 'date', 'yo');
-        //alert(date);
         setInterval(this.alarm, 1000);
     },
 
     onPause: function(){
         setInterval(this.alarm, 1000);
-    },
-
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-
-        console.log('Received Event: ' + id);
     },
 
     date: function(date){       // recupere la date sous format jour jour mois annee
@@ -77,60 +55,117 @@ var app = {
               heure = "0" + heure;  
          //return heure + "h" + minutes;
          heureString = new String();
-         heureString += date.getHours() + "/";
-         heureString += date.getMinutes();
+         heureString += heure + ":";
+         heureString += minutes;
          return heureString;
     },
 
-    alarm: function(){      // verifie si les alarmes rentrees sont égales à la date et heure actuelle
+    // verifie si les alarmes rentrees sont égales à la date et heure actuelle
+    alarm: function(){      
         var data = localStorage.getItem('alarme');  
         if (data) {  
+            var validate;
+            var index = 0;
             console.log(data);
             data = JSON.parse(data);
             var date = new Date();
-            date = app.date(date) + app.heure(date);
+            date = app.heure(date);
+            var dataC = app.tableauC();
+            console.log(date);
             data.forEach(function(element){
-                if (element == date) {
+                validate = dataC[index];
+                if(validate) console.log(element);
+                if (element == date && validate) {
                     app.notif();
                 }
+                index ++;
             });
-        }else(data = [])
+        }
     },
 
-    ajout: function(donnees){   // ajoute une nouvelle alarme
-        var data = localStorage.getItem('alarme');  
-        if (data) {  
-            data = JSON.parse(data);
-        }else(data = [])
-        data.push(donnees);
+    // ajoute une nouvelle alarme
+    ajout: function(){   
+        var data = this.tableauAlarme();  
+        var dataC = this.tableauC();
+        console.log(dataC);
         console.log(data);
+        data.push("00:00");
+        dataC.push(0);
         localStorage.setItem('alarme', JSON.stringify(data, null, '\t'));
+        localStorage.setItem('alarmeC', JSON.stringify(dataC, null, '\t'));
     },
 
-    supprimer: function(index){ // supprime une alarme
-        var data = localStorage.getItem('alarme');  
-        if (data) {  
-            data = JSON.parse(data);
-        }else(console.log(data))
+    // supprime une alarme
+    supprimer: function(index){
+        var data = this.tableauAlarme();  
+        var dataC = this.tableauC();
         data.splice(index, 1);
+        dataC.splice(index, 1);
         console.log(data);
+        console.log(dataC);
+        localStorage.setItem('alarme', JSON.stringify(data, null, '\t'));
+        localStorage.setItem('alarmeC', JSON.stringify(dataC, null, '\t'));
+    },
+
+    // modifie la valeur d'une alarme
+    modifier: function(index, donnees){
+        var data = this.tableauAlarme();
+        data[index] = $('#'+donnees).val();
         localStorage.setItem('alarme', JSON.stringify(data, null, '\t'));
     },
 
-    modifier: function(index, nouvelleValeur){  // modifier la valeur d'une alarme
+    // modifie la valeur d'un input checkbox
+    modifierC : function(index){
+        var validate = document.getElementById("inputCheckbox" + index).checked;
+        var dataC = this.tableauC();
+        if (validate) {
+            dataC[index] = 1;
+        }
+        else dataC[index] = 0;
+        localStorage.setItem('alarmeC', JSON.stringify(dataC, null, '\t'));
+    },
+
+    //notification
+    notif: function(){   
+        navigator.notification.beep(1);
+    },
+
+    //retourne la longueur du tableau de données
+    nextIndex: function(){
         var data = localStorage.getItem('alarme');  
         if (data) {  
             data = JSON.parse(data);
-        }else(console.log(data))
-        data[index] = nouvelleValeur;
-        console.log(data);
-        localStorage.setItem('alarme', JSON.stringify(data, null, '\t'));
+            var lenght = 0;
+            for (var key in data) {
+                if (data.hasOwnProperty(key)) {lenght++;}
+            }
+            return lenght;
+        } 
+        else return 0;
+
     },
 
-    notif: function(){   //notification
-        navigator.notification.beep(6);
+    //retourne le tableau de données
+    tableauAlarme: function(){
+        var data = localStorage.getItem('alarme');  
+        if (data) {  
+            data = JSON.parse(data);
+        }
+        else data = [];
+        return data;
+    },
+
+    //retourne le tableau des états des checkbox
+    tableauC: function(){
+        var dataC = localStorage.getItem('alarmeC');  
+        if (dataC) {  
+            dataC = JSON.parse(dataC);
+        }
+        else dataC = [];
+        return dataC;
     },
 
 };
 
 app.initialize();
+

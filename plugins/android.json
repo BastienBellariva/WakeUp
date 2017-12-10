@@ -12,7 +12,20 @@
     },
     "cordova-plugin-dialogs": {
       "PACKAGE_NAME": "com.appMobil.WakeUp"
+    },
+    "cordova-plugin-background-mode": {
+      "PACKAGE_NAME": "com.appMobil.WakeUp"
+    },
+    "cordova-plugin-local-notification": {
+      "PACKAGE_NAME": "com.appMobil.WakeUp"
     }
   },
-  "dependent_plugins": {}
+  "dependent_plugins": {
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.appMobil.WakeUp"
+    },
+    "cordova-plugin-badge": {
+      "PACKAGE_NAME": "com.appMobil.WakeUp"
+    }
+  }
 }
