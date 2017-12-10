@@ -32,11 +32,10 @@ affichageButtonSupprimer = function(etat){
 	else if((clicked == false)) 
 	{
 		$(".divActive").css("visibility", "hidden")
-		$(".divHour").animate({marginLeft:100}, 200)
-		$(".divAlarm").animate({marginLeft:-100}, 200, function()
+		$(".divHour").animate({marginLeft:100}, 500)
+		$(".divAlarm").animate({marginLeft:-100}, 500, function()
 			{
 				$(".divDelete").css("visibility", "visible");
-				$(".divDelete").animate({marginRight:100}, 500);
 			});
 		$(".divHour").prop('disabled', false);
 		clicked = true
@@ -136,7 +135,6 @@ SupprVisible = function() {
 	$(".divActive").css("visibility", "hidden");
 	$(".divDelete").css("visibility", "visible");
 	$(".divDelete").css("marginLeft", 500);
-	$(".divDelete").css("marginRight", 100);
 	$(".divHour").prop('disabled', false);
 };
 
