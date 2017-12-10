@@ -96,7 +96,7 @@ input:focus {
     /*Positionnement*/
     position: absolute;
     visibility: hidden;
-    right: -100px;
+    right: 0px;
     /*Dimension*/
     width: 120px;
     height: 70px;

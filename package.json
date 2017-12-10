@@ -13,10 +13,11 @@
     "cordova-android": "^6.3.0",
     "cordova-browser": "~5.0.1",
     "cordova-ios": "^4.5.4",
-    "cordova-plugin-dialogs": "~1.3.4",
-    "cordova-plugin-whitelist": "^1.3.3",
     "cordova-plugin-background-mode": "~0.7.2",
-    "cordova-plugin-local-notification": "~0.9.0-beta.1"
+    "cordova-plugin-badge": "^0.8.5",
+    "cordova-plugin-dialogs": "~1.3.4",
+    "cordova-plugin-local-notification": "^0.9.0-beta.1",
+    "cordova-plugin-whitelist": "^1.3.3"
   },
   "cordova": {
     "plugins": {

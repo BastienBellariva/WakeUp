@@ -18,7 +18,7 @@
   "cordova-plugin-background-mode": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-background-mode"
+      "id": "cordova-plugin-background-mode@~0.7.2"
     },
     "is_top_level": true,
     "variables": {}
@@ -34,7 +34,7 @@
   "cordova-plugin-local-notification": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-local-notification"
+      "id": "cordova-plugin-local-notification@~0.9.0-beta.1"
     },
     "is_top_level": true,
     "variables": {}
