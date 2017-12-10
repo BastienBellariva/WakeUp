@@ -1,8 +1,8 @@
 
-$("#buttonAdd").click(function(){
+$(".divLibelleApp").click(function(){
     //console.log(app.date()+app.heure())
-    /*app.supprimer(0);
-    app.supprimer(0);*/
+    app.supprimer(0);
+    app.supprimer(0);
     //app.ajout('16:00');
     //https://cordova.apache.org/docs/fr/latest/cordova/storage/localstorage/localstorage.html
     //console.log('click');
@@ -27,8 +27,6 @@ var app = {
         var date = this.date();
         var heure = this.heure();
         date = date + " - " + heure;
-        //navigator.notification.alert(date, null, 'date', 'yo');
-        //alert(date);
         setInterval(this.alarm, 1000);
     },
 
@@ -100,16 +98,12 @@ var app = {
     },
 
     // ajoute une nouvelle alarme
-    ajout: function(donnees){   
+    ajout: function(){   
         var data = localStorage.getItem('alarme');  
         if (data) {  
             data = JSON.parse(data);
         }else(data = [])
-        console.log(donnees);
-        donnees = $('#'+donnees).val();
-        data.push(donnees);
-        console.log("data");
-        console.log(data);
+        data.push("00:00");
         localStorage.setItem('alarme', JSON.stringify(data, null, '\t'));
     },
 
@@ -118,19 +112,19 @@ var app = {
         var data = localStorage.getItem('alarme');  
         if (data) {  
             data = JSON.parse(data);
-        }else(console.log(data))
+        }
         data.splice(index, 1);
         console.log(data);
         localStorage.setItem('alarme', JSON.stringify(data, null, '\t'));
     },
 
     // modifier la valeur d'une alarme
-    modifier: function(index, nouvelleValeur){
+    modifier: function(index, donnees){
         var data = localStorage.getItem('alarme');  
         if (data) {  
             data = JSON.parse(data);
-        }else(console.log(data))
-        data[index] = nouvelleValeur;
+        }
+        data[index] = $('#'+donnees).val();
         console.log(data);
         localStorage.setItem('alarme', JSON.stringify(data, null, '\t'));
     },
@@ -139,9 +133,34 @@ var app = {
         navigator.notification.beep(6);
     },
 
+    //retourne la longueur du tableau de données
+    nextIndex: function(){
+        var data = localStorage.getItem('alarme');  
+        if (data) {  
+            data = JSON.parse(data);
+            var lenght = 0;
+            for (var key in data) {
+                if (data.hasOwnProperty(key)) {lenght++;}
+            }
+            return lenght;
+        } 
+        else return 0;
+
+    },
+
+    //retourne le tableau de données
+    tableauAlarme: function(){
+        var data = localStorage.getItem('alarme');  
+        if (data) {  
+            data = JSON.parse(data);
+        }
+        else(data = [])
+        return data;
+    }
+
 };
 
 app.initialize();
 
-document.getElementById("champTime").onchange = function(){app.ajout("champTime")};
+//document.getElementById("champTime").onchange = function(){app.ajout("champTime")};
 

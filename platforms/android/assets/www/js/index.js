@@ -1,12 +1,13 @@
 
-
-$("#test").click(function(){
+$(".divLibelleApp").click(function(){
     //console.log(app.date()+app.heure())
-    app.ajout('30/10/2017/16/7');
-    //app.supprimer(0);
+    app.supprimer(0);
+    app.supprimer(0);
+    //app.ajout('16:00');
     //https://cordova.apache.org/docs/fr/latest/cordova/storage/localstorage/localstorage.html
+    //console.log('click');
+    //console.log($('#time').val());
 });
-
 
 
 var app = {
@@ -22,12 +23,10 @@ var app = {
     // 'pause', 'resume', etc.
 
     onDeviceReady: function() {
-        this.receivedEvent('deviceready');
+        //this.receivedEvent('deviceready');
         var date = this.date();
         var heure = this.heure();
         date = date + " - " + heure;
-        //navigator.notification.alert(date, null, 'date', 'yo');
-        //alert(date);
         setInterval(this.alarm, 1000);
     },
 
@@ -36,16 +35,16 @@ var app = {
     },
 
     // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
+    // receivedEvent: function(id) {
+    //     var parentElement = document.getElementById(id);
+    //     var listeningElement = parentElement.querySelector('.listening');
+    //     var receivedElement = parentElement.querySelector('.received');
 
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
+    //     listeningElement.setAttribute('style', 'display:none;');
+    //     receivedElement.setAttribute('style', 'display:block;');
 
-        console.log('Received Event: ' + id);
-    },
+    //     console.log('Received Event: ' + id);
+    // },
 
     date: function(date){       // recupere la date sous format jour jour mois annee
         // les noms de jours / mois
@@ -77,18 +76,19 @@ var app = {
               heure = "0" + heure;  
          //return heure + "h" + minutes;
          heureString = new String();
-         heureString += date.getHours() + "/";
+         heureString += date.getHours() + ":";
          heureString += date.getMinutes();
          return heureString;
     },
 
-    alarm: function(){      // verifie si les alarmes rentrees sont égales à la date et heure actuelle
+    // verifie si les alarmes rentrees sont égales à la date et heure actuelle
+    alarm: function(){      
         var data = localStorage.getItem('alarme');  
         if (data) {  
             console.log(data);
             data = JSON.parse(data);
             var date = new Date();
-            date = app.date(date) + app.heure(date);
+            date = app.heure(date);
             data.forEach(function(element){
                 if (element == date) {
                     app.notif();
@@ -97,32 +97,34 @@ var app = {
         }else(data = [])
     },
 
-    ajout: function(donnees){   // ajoute une nouvelle alarme
+    // ajoute une nouvelle alarme
+    ajout: function(){   
         var data = localStorage.getItem('alarme');  
         if (data) {  
             data = JSON.parse(data);
         }else(data = [])
-        data.push(donnees);
-        console.log(data);
+        data.push("00:00");
         localStorage.setItem('alarme', JSON.stringify(data, null, '\t'));
     },
 
-    supprimer: function(index){ // supprime une alarme
+    // supprime une alarme
+    supprimer: function(index){
         var data = localStorage.getItem('alarme');  
         if (data) {  
             data = JSON.parse(data);
-        }else(console.log(data))
+        }
         data.splice(index, 1);
         console.log(data);
         localStorage.setItem('alarme', JSON.stringify(data, null, '\t'));
     },
 
-    modifier: function(index, nouvelleValeur){  // modifier la valeur d'une alarme
+    // modifier la valeur d'une alarme
+    modifier: function(index, donnees){
         var data = localStorage.getItem('alarme');  
         if (data) {  
             data = JSON.parse(data);
-        }else(console.log(data))
-        data[index] = nouvelleValeur;
+        }
+        data[index] = $('#'+donnees).val();
         console.log(data);
         localStorage.setItem('alarme', JSON.stringify(data, null, '\t'));
     },
@@ -131,6 +133,34 @@ var app = {
         navigator.notification.beep(6);
     },
 
+    //retourne la longueur du tableau de données
+    nextIndex: function(){
+        var data = localStorage.getItem('alarme');  
+        if (data) {  
+            data = JSON.parse(data);
+            var lenght = 0;
+            for (var key in data) {
+                if (data.hasOwnProperty(key)) {lenght++;}
+            }
+            return lenght;
+        } 
+        else return 0;
+
+    },
+
+    //retourne le tableau de données
+    tableauAlarme: function(){
+        var data = localStorage.getItem('alarme');  
+        if (data) {  
+            data = JSON.parse(data);
+        }
+        else(data = [])
+        return data;
+    }
+
 };
 
 app.initialize();
+
+//document.getElementById("champTime").onchange = function(){app.ajout("champTime")};
+

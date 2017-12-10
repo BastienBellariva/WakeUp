@@ -16,66 +16,25 @@
         <!-- Div header fixed -->
         <div class="absoluteHeader">
             <!-- Bouton Modifier -->
-            <div class="divButtonUpdate col-xs-4">
-                <button type="button" class="buttonUpdate">Modif.</button>
+            <div class="divButtonUpdate col-xs-4 col-sm-4" id="divButtonUpdate">
+                <p class="buttonUpdate">Modifier</p>
             </div>
             <!-- Libellé Alarme -->
-            <div class="divLibelleApp col-xs-4">
+            <div class="divLibelleApp col-xs-4 col-sm-4">
                 <p class="libelleApp">Alarme</p>
             </div>
             <!-- Bouton Ajouter -->
-            <div class="divButtonAdd col-xs-4">
-                <button type="button" class="buttonAdd fa fa-plus-circle"></button>
+            <div class="divButtonAdd col-xs-4 col-sm-4">
+                <button type="submit" class="buttonAdd fa fa-plus-circle"  id="buttonAdd">
             </div>
         </div>
         
         <!-- Div contenant tous les bandeaux alarme -->
-        <div class="containDivAlarm">
-            <!-- Div d'un bandeau alarme -->
-            <div class="divAlarm" id="divAlarm">
-                <!-- Heure -->
-                <div class="divHeure col-xs-6">
-                    <p>06 : 30</p>
-                </div>
-                <!-- Toggle -->
-                <div class="divActive col-xs-6">
-                    <div class="onOff" id="onOff">
-                    <label class="switch" id="switch">
-                        <input type="checkbox">
-                        <span class="slider round"></span>
-                    </label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="divAlarm" id="divAlarm">
-                <div class="divHeure col-xs-6">
-                    <p>11 : 30</p>
-                </div>
-                <div class="divActive col-xs-6">
-                    <div class="onOff" id="onOff">
-                    <label class="switch" id="switch">
-                        <input type="checkbox">
-                        <span class="slider round"></span>
-                    </label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="divAlarm" id="divAlarm">
-                <input type="time" value="00:00" class="divHeure col-xs-6"/>
-                <div class="divActive col-xs-6">
-                    <div class="onOff" id="onOff">
-                    <label class="switch" id="switch">
-                        <input type="checkbox">
-                        <span class="slider round"></span>
-                    </label>
-                    </div>
-                </div>
-            </div>
+        <div class="containDivAlarm" id="containDivAlarm">
         </div>
             
         <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="js/ergo_jquery.js"></script>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script src="bootstrap/dist/js/bootstrap.min.js"></script>
