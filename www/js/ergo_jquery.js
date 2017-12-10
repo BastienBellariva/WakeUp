@@ -23,6 +23,7 @@ $("#buttonAdd").click(function()
 	);
 });
 
+//Gere l'affichage du bouton Suppr.
 affichageButtonSupprimer = function(etat){
 	if (etat) {
 		SupprVisible();
@@ -54,7 +55,8 @@ affichageButtonSupprimer = function(etat){
 	}
 };
 
-creationAlarme = function(index, valeur){
+//Creation d'une nouvelle div alarme
+creationAlarme = function(index, valeur, checked){
 	//Div Alarm
 	divAlarm = document.createElement("div");
 	divAlarm.id = "divAlarmT" + index;
@@ -81,6 +83,7 @@ creationAlarme = function(index, valeur){
 
 	inputCheckbox = document.createElement("input");
 	inputCheckbox.id = "inputCheckbox" + index;
+	if (checked) inputCheckbox.checked = true;
 
 	spanSlider = document.createElement("span");
 	spanSlider.className = "slider round";
@@ -104,6 +107,7 @@ creationAlarme = function(index, valeur){
 	document.getElementById("switch t"  + index).prepend(inputCheckbox);
 	document.getElementById("inputCheckbox"  + index).setAttribute("type","checkbox");
 	document.getElementById("inputCheckbox"  + index).after(spanSlider);
+	document.getElementById("inputCheckbox"  + index).onclick = function(){app.modifierC(index)};
 	document.getElementById("divActiveT"  + index).after(divSuppr);
 	document.getElementById("divDelete t"  + index).setAttribute("type", "submit");
 	document.getElementById("divDelete t"  + index).onclick = function(){
@@ -117,24 +121,26 @@ creationAlarme = function(index, valeur){
 	};
 };
 
+//Affiche les divs alarme
 affichageAlarme = function() {
 	var i = 0;
+	tableauC = app.tableauC();
 	app.tableauAlarme().forEach(function(element) {
-		creationAlarme(i, element);
+		creationAlarme(i, element, tableauC[i]);
 		i++;
 	});
 };
 
+//Rend le bouton Suppr. visible sans animation
 SupprVisible = function() {
 	$(".divActive").css("visibility", "hidden");
 	$(".divDelete").css("visibility", "visible");
 	$(".divDelete").css("marginLeft", 500);
 	$(".divDelete").css("marginRight", 100);
 	$(".divHour").prop('disabled', false);
-}
+};
 
-
-
+//efface toutes les divs alarme
 actualiser = function() {
 	$(".containDivAlarm").empty();
-}
+};

@@ -1,12 +1,7 @@
 
 $(".divLibelleApp").click(function(){
-    //console.log(app.date()+app.heure())
     app.supprimer(0);
     app.supprimer(0);
-    //app.ajout('16:00');
-    //https://cordova.apache.org/docs/fr/latest/cordova/storage/localstorage/localstorage.html
-    //console.log('click');
-    //console.log($('#time').val());
 });
 
 
@@ -23,28 +18,12 @@ var app = {
     // 'pause', 'resume', etc.
 
     onDeviceReady: function() {
-        //this.receivedEvent('deviceready');
-        var date = this.date();
-        var heure = this.heure();
-        date = date + " - " + heure;
         setInterval(this.alarm, 1000);
     },
 
     onPause: function(){
         setInterval(this.alarm, 1000);
     },
-
-    // Update DOM on a Received Event
-    // receivedEvent: function(id) {
-    //     var parentElement = document.getElementById(id);
-    //     var listeningElement = parentElement.querySelector('.listening');
-    //     var receivedElement = parentElement.querySelector('.received');
-
-    //     listeningElement.setAttribute('style', 'display:none;');
-    //     receivedElement.setAttribute('style', 'display:block;');
-
-    //     console.log('Received Event: ' + id);
-    // },
 
     date: function(date){       // recupere la date sous format jour jour mois annee
         // les noms de jours / mois
@@ -76,8 +55,8 @@ var app = {
               heure = "0" + heure;  
          //return heure + "h" + minutes;
          heureString = new String();
-         heureString += date.getHours() + ":";
-         heureString += date.getMinutes();
+         heureString += heure + ":";
+         heureString += minutes;
          return heureString;
     },
 
@@ -85,14 +64,20 @@ var app = {
     alarm: function(){      
         var data = localStorage.getItem('alarme');  
         if (data) {  
+            var validate;
+            var index = 0;
             console.log(data);
             data = JSON.parse(data);
             var date = new Date();
             date = app.heure(date);
+            console.log(date);
             data.forEach(function(element){
-                if (element == date) {
+                validate = document.getElementById("inputCheckbox" + index).checked;
+                if(validate) console.log(element);
+                if (element == date && validate) {
                     app.notif();
                 }
+                index ++;
             });
         }else(data = [])
     },
@@ -100,37 +85,68 @@ var app = {
     // ajoute une nouvelle alarme
     ajout: function(){   
         var data = localStorage.getItem('alarme');  
+        var dataC = localStorage.getItem('alarmeC');
         if (data) {  
             data = JSON.parse(data);
-        }else(data = [])
+        }
+        else data = [];
+
+        if (dataC) {
+            dataC = JSON.parse(dataC);
+        }
+        else dataC = [];
+
+        console.log(dataC);
+        console.log(data);
         data.push("00:00");
+        dataC.push(0);
         localStorage.setItem('alarme', JSON.stringify(data, null, '\t'));
+        localStorage.setItem('alarmeC', JSON.stringify(dataC, null, '\t'));
     },
 
     // supprime une alarme
     supprimer: function(index){
         var data = localStorage.getItem('alarme');  
+        var dataC = localStorage.getItem('alarmeC');
         if (data) {  
             data = JSON.parse(data);
+            dataC = JSON.parse(dataC);
         }
         data.splice(index, 1);
+        dataC.splice(index, 1);
         console.log(data);
+        console.log(dataC);
         localStorage.setItem('alarme', JSON.stringify(data, null, '\t'));
+        localStorage.setItem('alarmeC', JSON.stringify(dataC, null, '\t'));
     },
 
-    // modifier la valeur d'une alarme
+    // modifie la valeur d'une alarme
     modifier: function(index, donnees){
         var data = localStorage.getItem('alarme');  
         if (data) {  
             data = JSON.parse(data);
         }
         data[index] = $('#'+donnees).val();
-        console.log(data);
         localStorage.setItem('alarme', JSON.stringify(data, null, '\t'));
     },
 
-    notif: function(){   //notification
-        navigator.notification.beep(6);
+    // modifie la valeur d'un input checkbox
+    modifierC : function(index){
+        var validate = document.getElementById("inputCheckbox" + index).checked;
+        var dataC = localStorage.getItem('alarmeC');
+        if (dataC) {  
+            dataC = JSON.parse(dataC);
+        }
+        if (validate) {
+            dataC[index] = 1;
+        }
+        else dataC[index] = 0;
+        localStorage.setItem('alarmeC', JSON.stringify(dataC, null, '\t'));
+    },
+
+    //notification
+    notif: function(){   
+        navigator.notification.beep(1);
     },
 
     //retourne la longueur du tableau de données
@@ -156,11 +172,19 @@ var app = {
         }
         else(data = [])
         return data;
-    }
+    },
+
+    //retourne le tableau des états des checkbox
+    tableauC: function(){
+        var dataC = localStorage.getItem('alarmeC');  
+        if (dataC) {  
+            dataC = JSON.parse(dataC);
+        }
+        else(dataC = [])
+        return dataC;
+    },
 
 };
 
 app.initialize();
-
-//document.getElementById("champTime").onchange = function(){app.ajout("champTime")};
 
