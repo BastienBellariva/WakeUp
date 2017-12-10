@@ -79,7 +79,7 @@ var app = {
                 }
                 index ++;
             });
-        }else(data = [])
+        }
     },
 
     // ajoute une nouvelle alarme
@@ -137,6 +137,7 @@ var app = {
         if (dataC) {  
             dataC = JSON.parse(dataC);
         }
+        else dataC = [];
         if (validate) {
             dataC[index] = 1;
         }
@@ -170,7 +171,7 @@ var app = {
         if (data) {  
             data = JSON.parse(data);
         }
-        else(data = [])
+        else data = [];
         return data;
     },
 
@@ -180,7 +181,7 @@ var app = {
         if (dataC) {  
             dataC = JSON.parse(dataC);
         }
-        else(dataC = [])
+        else dataC = [];
         return dataC;
     },
 
